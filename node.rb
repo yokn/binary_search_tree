@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Node
-  def initialize(value, left, right)
-    @value = value
+  attr_accessor :data, :left, :right
+  def initialize(data, left = nil, right = nil)
+    @data = data
     @left = left
     @right = right
   end
