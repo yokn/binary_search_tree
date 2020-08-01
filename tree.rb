@@ -4,25 +4,33 @@ require_relative 'node'
 
 class Tree
   def initialize
-    @root = nil
+    # @root = nil
     @sorted = false
   end
 
   def build_tree(arr)
+    puts '-------------------------------------------------------------------'
     unless @sorted
       arr.uniq!.sort!
       @sorted = true
     end
     p arr
-    return nil unless arr[0]
+    return nil if arr.empty?
+    return Node.new(arr[0]) if arr.length == 1
+
+    # return @root if arr.length == 1
 
     @mid = (arr.length / 2)
     p @mid
     p @root = Node.new(arr[@mid])
     p 'building left'
-    p @root.left = build_tree(arr[0...@mid])
+    p "left was: #{@root.left}"
+    @root.left = build_tree(arr[0...@mid])
+    p "left is now: #{@root.left}"
     p 'building right'
-    p @root.right = build_tree(arr[(@mid + 1)..-1])
+    p "right is: #{@root.right}"
+    @root.right = build_tree(arr[(@mid + 1)..-1])
+    p "right is: #{@root.right}"
     @root
   end
 end
