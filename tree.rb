@@ -5,8 +5,11 @@ class Tree
     @root = nil
   end
 
-  def build_tree(arr); end
+  def build_tree(arr)
+    arr.uniq!.sort!
+    p arr
+  end
 end
 
 my_tree = Tree.new
-my_tree.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+p my_tree.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
