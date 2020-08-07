@@ -3,9 +3,9 @@
 require_relative 'node'
 
 class Tree
-  def initialize(array)
+  def initialize(arr)
     @sorted = false
-    @root = build_tree(array)
+    @root = build_tree(arr)
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -69,6 +69,56 @@ class Tree
     end
   end
 
+  def delete(number, pointer = @root)
+    p "deleting #{number}"
+    p "Currently at #{pointer.data}"
+    result = number <=> pointer.data
+    case result
+    when 1
+      p 'Number is bigger than the pointer'
+      if pointer.right.data == number
+        delete_right(pointer)
+        return
+      end
+      pointer = pointer.right
+      delete(number, pointer)
+    when -1
+      p 'Number is smaller than the pointer'
+      if pointer.left.data == number
+        delete_left(pointer)
+        return
+      end
+      pointer = pointer.left
+      delete(number, pointer)
+    end
+  end
+
+  def delete_left(pointer)
+    if pointer.left.left.nil? && pointer.left.right.nil?
+      pointer.left = nil
+      pointer.right = nil
+    elsif pointer.left.left
+      pointer.left = pointer.left.left
+      pointer.right = nil
+    elsif pointer.left.right
+      pointer.right = pointer.left.right
+      pointer.left = nil
+    end
+  end
+
+  def delete_right(pointer)
+    if pointer.right.left.nil? && pointer.right.right.nil?
+      pointer.left = nil
+      pointer.right = nil
+    elsif pointer.right.left
+      pointer.left = pointer.right.left
+      pointer.right = nil
+    elsif pointer.right.right
+      pointer.right = pointer.right.right
+      pointer.left = nil
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│ ' : ' '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -82,4 +132,10 @@ my_tree.pretty_print
 my_tree.insert(2)
 my_tree.insert(6)
 my_tree.insert(65)
+my_tree.pretty_print
+
+my_tree.delete(6)
+my_tree.delete(65)
+my_tree.delete(2)
+my_tree.delete(324)
 my_tree.pretty_print
