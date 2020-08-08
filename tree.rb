@@ -141,6 +141,20 @@ class Tree
     current
   end
 
+  def find(number, pointer = @root)
+    result = number <=> pointer.data
+    case result
+    when 1
+      pointer = pointer.right
+      find(number, pointer)
+    when 0
+      pointer
+    when -1
+      pointer = pointer.left
+      find(number, pointer)
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│ ' : ' '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -156,13 +170,17 @@ my_tree.insert(6)
 my_tree.insert(65)
 my_tree.pretty_print
 
-my_tree.delete(6)
+# my_tree.delete(6)
+# my_tree.pretty_print
+# my_tree.delete(65)
+# my_tree.pretty_print
+# my_tree.delete(2)
+# my_tree.pretty_print
+# my_tree.delete(324)
+# my_tree.pretty_print
+# my_tree.delete(4)
+# my_tree.pretty_print
+my_tree.delete(67)
 my_tree.pretty_print
-my_tree.delete(65)
-my_tree.pretty_print
-my_tree.delete(2)
-my_tree.pretty_print
-my_tree.delete(324)
-my_tree.pretty_print
-my_tree.delete(4)
-my_tree.pretty_print
+
+p my_tree.find(9)
