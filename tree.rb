@@ -9,7 +9,6 @@ class Tree
     @root = build_tree(arr)
   end
 
-  # rubocop:disable Metrics/MethodLength
   def build_tree(arr, first = 0, last = nil)
     # puts '-------------------------------------------------------------------'
     unless @sorted
@@ -36,7 +35,6 @@ class Tree
     root
   end
 
-  # rubocop:disable Metrics/AbcSize
   def insert(number, pointer = @root)
     p "Inserting #{number}"
     p "Currently at #{pointer.data}"
@@ -155,6 +153,20 @@ class Tree
     end
   end
 
+  def level_order(pointer = @root, queue = [])
+    return if pointer.nil?
+
+    queue << pointer
+
+    until queue.empty?
+      current = queue[0]
+      p current.data
+      queue << current.left if current.left
+      queue << current.right if current.right
+      queue.shift
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│ ' : ' '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -184,3 +196,5 @@ my_tree.delete(67)
 my_tree.pretty_print
 
 p my_tree.find(9)
+
+p my_tree.level_order
