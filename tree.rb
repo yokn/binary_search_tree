@@ -2,6 +2,7 @@
 
 require_relative 'node'
 
+# rubocop:disable Metrics/ClassLength
 class Tree
   def initialize(arr)
     @sorted = false
@@ -82,6 +83,9 @@ class Tree
       end
       pointer = pointer.right
       delete(number, pointer)
+    when 0
+      p 'Number is equal to the pointer'
+      pointer.right
     when -1
       p 'Number is smaller than the pointer'
       if pointer.left.data == number
@@ -94,7 +98,10 @@ class Tree
   end
 
   def delete_left(pointer)
-    if pointer.left.left.nil? && pointer.left.right.nil?
+    if pointer.left.left && pointer.left.right
+      p 'here'
+      delete_both(pointer.left)
+    elsif pointer.left.left.nil? && pointer.left.right.nil?
       pointer.left = nil
       pointer.right = nil
     elsif pointer.left.left
@@ -107,7 +114,9 @@ class Tree
   end
 
   def delete_right(pointer)
-    if pointer.right.left.nil? && pointer.right.right.nil?
+    if pointer.right.left && pointer.right.right
+      delete_both(pointer.right)
+    elsif pointer.right.left.nil? && pointer.right.right.nil?
       pointer.left = nil
       pointer.right = nil
     elsif pointer.right.left
@@ -117,6 +126,19 @@ class Tree
       pointer.right = pointer.right.right
       pointer.left = nil
     end
+  end
+
+  def delete_both(pointer)
+    smallest = find_smallest(pointer.right)
+    p "new smallest: #{smallest.data}"
+    pointer.data = smallest.data
+    pointer.right = delete(smallest.data, pointer.right)
+  end
+
+  def find_smallest(pointer)
+    current = pointer
+    current = current.left until current.left.nil?
+    current
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -135,7 +157,12 @@ my_tree.insert(65)
 my_tree.pretty_print
 
 my_tree.delete(6)
+my_tree.pretty_print
 my_tree.delete(65)
+my_tree.pretty_print
 my_tree.delete(2)
+my_tree.pretty_print
 my_tree.delete(324)
+my_tree.pretty_print
+my_tree.delete(4)
 my_tree.pretty_print
