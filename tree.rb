@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'node'
-
-# rubocop:disable Metrics/ClassLength
 class Tree
   def initialize(arr)
     @sorted = false
@@ -194,7 +192,15 @@ class Tree
     array << pointer.data
   end
 
-  def depth(pointer = @root, levels = 0); end
+  def depth(pointer = @root, levels = -1)
+    return levels if pointer.nil?
+
+    # pointer = find(pointer)
+
+    left_depth = depth(pointer.left)
+    right_depth = depth(pointer.right)
+    left_depth > right_depth ? left_depth + 1 : right_depth + 1
+  end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│ ' : ' '}", false) if node.right
@@ -224,6 +230,7 @@ my_tree.pretty_print
 my_tree.delete(67)
 my_tree.pretty_print
 
+p 'Finding node: 9'
 p my_tree.find(9)
 
 p 'Level order'
@@ -234,3 +241,8 @@ p 'In order'
 p my_tree.inorder
 p 'Post order'
 p my_tree.postorder
+
+p 'Depth of 2 is:'
+p my_tree.depth(my_tree.find(2))
+p 'Depth of 8 is:'
+p my_tree.depth(my_tree.find(8))
