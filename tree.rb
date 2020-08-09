@@ -154,7 +154,7 @@ class Tree
   end
 
   def level_order(pointer = @root, queue = [])
-    return if pointer.nil?
+    # return if pointer.nil?
 
     queue << pointer
 
@@ -165,6 +165,30 @@ class Tree
       queue << current.right if current.right
       queue.shift
     end
+  end
+
+  def preorder(pointer = @root)
+    return if pointer.nil?
+
+    puts pointer.data
+    preorder(pointer.left)
+    preorder(pointer.right)
+  end
+
+  def inorder(pointer = @root)
+    return if pointer.nil?
+
+    inorder(pointer.left)
+    puts pointer.data
+    inorder(pointer.right)
+  end
+
+  def postorder(pointer = @root)
+    return if pointer.nil?
+
+    preorder(pointer.left)
+    preorder(pointer.right)
+    puts pointer.data
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -197,4 +221,11 @@ my_tree.pretty_print
 
 p my_tree.find(9)
 
+p 'Level order'
 p my_tree.level_order
+p 'Pre order'
+p my_tree.preorder
+p 'In order'
+p my_tree.inorder
+p 'Post order'
+p my_tree.postorder
