@@ -3,16 +3,16 @@
 require_relative 'node'
 class Tree
   def initialize(arr)
-    @sorted = false
+    # @sorted = false
     @root = build_tree(arr)
   end
 
   def build_tree(arr, first = 0, last = nil)
     # puts '-------------------------------------------------------------------'
-    unless @sorted
-      arr.uniq!.sort!
-      @sorted = true
-    end
+    # unless @sorted
+    #   arr.uniq!.sort!
+    #   @sorted = true
+    # end
     # p arr
     last ||= arr.length - 1
     # p "first is: #{first}"
@@ -202,6 +202,25 @@ class Tree
     left_depth > right_depth ? left_depth + 1 : right_depth + 1
   end
 
+  # def balanced?(pointer = @root)
+  #   (depth(pointer.left) - depth(pointer.right)).abs < 2 ? 'balanced' : 'unbalanced'
+  # end
+
+  def balanced?(pointer = @root)
+    return true if pointer.nil?
+
+    left_depth = depth(pointer.left)
+    right_depth = depth(pointer.right)
+
+    return true if (left_depth - right_depth).abs < 2 && balanced?(pointer.left) && balanced?(pointer.right)
+
+    false
+  end
+
+  def rebalance
+    @root = build_tree(level_order.uniq.sort)
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│ ' : ' '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -209,7 +228,7 @@ class Tree
   end
 end
 
-my_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+my_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324].uniq.sort)
 my_tree.pretty_print
 
 my_tree.insert(2)
@@ -246,3 +265,11 @@ p 'Depth of 2 is:'
 p my_tree.depth(my_tree.find(2))
 p 'Depth of 8 is:'
 p my_tree.depth(my_tree.find(8))
+
+my_tree.pretty_print
+p my_tree.balanced?
+
+my_tree.rebalance
+
+my_tree.pretty_print
+p my_tree.balanced?
