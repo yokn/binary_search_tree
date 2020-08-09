@@ -153,43 +153,48 @@ class Tree
     end
   end
 
-  def level_order(pointer = @root, queue = [])
+  def level_order(pointer = @root, queue = [], array = [])
     # return if pointer.nil?
 
     queue << pointer
 
     until queue.empty?
       current = queue[0]
-      p current.data
+      array << current.data
       queue << current.left if current.left
       queue << current.right if current.right
       queue.shift
     end
+    array
   end
 
-  def preorder(pointer = @root)
+  def preorder(pointer = @root, array = [])
     return if pointer.nil?
 
-    puts pointer.data
-    preorder(pointer.left)
-    preorder(pointer.right)
+    array << pointer.data
+    preorder(pointer.left, array)
+    preorder(pointer.right, array)
+    array
   end
 
-  def inorder(pointer = @root)
+  def inorder(pointer = @root, array = [])
     return if pointer.nil?
 
-    inorder(pointer.left)
-    puts pointer.data
-    inorder(pointer.right)
+    inorder(pointer.left, array)
+    array << pointer.data
+    inorder(pointer.right, array)
+    array
   end
 
-  def postorder(pointer = @root)
+  def postorder(pointer = @root, array = [])
     return if pointer.nil?
 
-    preorder(pointer.left)
-    preorder(pointer.right)
-    puts pointer.data
+    preorder(pointer.left, array)
+    preorder(pointer.right, array)
+    array << pointer.data
   end
+
+  def depth(pointer = @root, levels = 0); end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│ ' : ' '}", false) if node.right
