@@ -228,48 +228,38 @@ class Tree
   end
 end
 
-my_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324].uniq.sort)
-my_tree.pretty_print
-
-my_tree.insert(2)
-my_tree.insert(6)
-my_tree.insert(65)
-my_tree.pretty_print
-
-# my_tree.delete(6)
+# my_tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324].uniq.sort)
 # my_tree.pretty_print
-# my_tree.delete(65)
+
+# my_tree.insert(2)
+# my_tree.insert(6)
+# my_tree.insert(65)
 # my_tree.pretty_print
-# my_tree.delete(2)
+
+# my_tree.delete(67)
 # my_tree.pretty_print
-# my_tree.delete(324)
+
+# p 'Finding node: 9'
+# p my_tree.find(9)
+
+# p 'Level order'
+# p my_tree.level_order
+# p 'Pre order'
+# p my_tree.preorder
+# p 'In order'
+# p my_tree.inorder
+# p 'Post order'
+# p my_tree.postorder
+
+# p 'Depth of 2 is:'
+# p my_tree.depth(my_tree.find(2))
+# p 'Depth of 8 is:'
+# p my_tree.depth(my_tree.find(8))
+
 # my_tree.pretty_print
-# my_tree.delete(4)
+# p my_tree.balanced?
+
+# my_tree.rebalance
+
 # my_tree.pretty_print
-my_tree.delete(67)
-my_tree.pretty_print
-
-p 'Finding node: 9'
-p my_tree.find(9)
-
-p 'Level order'
-p my_tree.level_order
-p 'Pre order'
-p my_tree.preorder
-p 'In order'
-p my_tree.inorder
-p 'Post order'
-p my_tree.postorder
-
-p 'Depth of 2 is:'
-p my_tree.depth(my_tree.find(2))
-p 'Depth of 8 is:'
-p my_tree.depth(my_tree.find(8))
-
-my_tree.pretty_print
-p my_tree.balanced?
-
-my_tree.rebalance
-
-my_tree.pretty_print
-p my_tree.balanced?
+# p my_tree.balanced?
